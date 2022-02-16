@@ -2,55 +2,77 @@ import 'package:flutter/material.dart';
 
 
 
-
 class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFBFDFF),
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 80),
+        preferredSize: Size(double.infinity, 90),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: AppBar(
+            backgroundColor: Colors.white,
             elevation: 0,
-            backgroundColor: Color(0xFFFBFDFF),
-          leading: CircleAvatar(
-            radius: 35,
-            backgroundColor: Color(0xFF0C041D),
-            child: Icon(Icons.menu),
-          ),
-
+            leading: CircleAvatar(
+              backgroundColor: Colors.black,
+              child: Icon(Icons.menu),
+            ),
             actions: [
               CircleAvatar(
-                radius: 35,
-               backgroundImage: NetworkImage('https://images.unsplash.com/photo-1644207072264-61e9bd2507a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fHRvd0paRnNrcEdnfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
+                radius: 40,
+                backgroundImage: NetworkImage(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn0EQn9cCXCHQQZefRsJnrzu5tpvDJFJ4GCg&usqp=CAU',
+                ),
+                backgroundColor: Colors.black,
+                child: Icon(Icons.menu),
               ),
             ],
-
           ),
         ),
       ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+          padding: const EdgeInsets.only(top: 7, left: 17, right: 17),
           child: ListView(
             children: [
-               Container(
-                 height: 200,
-                 width: double.infinity,
-                 decoration: BoxDecoration(
-                color: Color(0xFF101215),
-                   borderRadius: BorderRadius.circular(20)
-                 ),
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     Text('Better Way To Invest', style: TextStyle(color: Colors.white),),
-                     ElevatedButton(onPressed: (){}, child: Text('Invest Now')),
-                   ],
-                 ),
-               ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFF232526),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                width: double.infinity,
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Better Way\n'
+                        'To Invest', style: TextStyle(color: Colors.white,
+                        fontSize: 27,
+                        wordSpacing: 7, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                   SizedBox(height: 10,),
+                    Container(
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)
+                          )
+                        ),
+                          onPressed: (){
+
+                          }, child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Text('Invest Now', style: TextStyle(color: Colors.black, letterSpacing: 1),),
+                          )),
+                    )
+                  ],
+                ),
+              ),
+
+
             ],
           ),
         ),
