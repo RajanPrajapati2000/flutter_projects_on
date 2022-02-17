@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/providers/data_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
@@ -67,9 +70,54 @@ class DetailScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Text('Invest Now', style: TextStyle(color: Colors.black, letterSpacing: 1),),
                           )),
-                    )
+                    ),
+
                   ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Text('Popular Stocks', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
+              ),
+
+              Consumer(
+               builder: (context, ref, child){
+                 final data = ref.watch(dataProvider).stocks;
+                 return Container(
+                   height: 200,
+                   child: ListView.builder(
+                     shrinkWrap: true,
+                     physics: BouncingScrollPhysics(),
+                     scrollDirection: Axis.horizontal,
+                       itemCount: data.length,
+                       itemBuilder: (context, index){
+                       final dat = data[index];
+                         return Container(
+                           width: 150,
+                           margin: EdgeInsets.only(right: 15),
+                           decoration: BoxDecoration(
+                             color: dat.boxColor.withOpacity(0.4),
+                             borderRadius: BorderRadius.circular(20)
+                           ),
+                           child: Column(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               CircleAvatar(
+                                 backgroundColor: dat.circleColor.withOpacity(0.4),
+                                 radius: 35,
+                                 child: Icon(dat.logo, size: 30,),
+                               ),
+                               SizedBox(height: 10,),
+                               Text(dat.label, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
+                               SizedBox(height: 10,),
+                               Text(dat.data, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),)
+                             ],
+                           ),
+                         );
+                       }
+                   ),
+                 );
+               }
               ),
 
 
