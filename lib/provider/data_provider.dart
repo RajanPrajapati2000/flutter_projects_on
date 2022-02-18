@@ -8,13 +8,7 @@ final dataProvider = Provider((ref) => DataProvider());
 class DataProvider{
 
 
-  List<Stock>  get stocks{
-    return _stocks;
-  }
-
-
-List<Stock> _stocks = [
-
+List<Stock> popular_stocks = [
 
  Stock(
      data: '+526%',
@@ -48,41 +42,38 @@ List<Stock> _stocks = [
 ];
 
 
-
 List<Stock> following_stocks = [
 
-
   Stock(
-    data: '+426%',
-    label: 'Bmw',
-    logo: FontAwesomeIcons.car,
+    data: '+626%',
+    label: 'Tesla',
+    logo: FontAwesomeIcons.yandex,
     circleColor: Colors.green,
     boxColor: Colors.blue,
   ),
   Stock(
-    data: '+926%',
-    label: 'Tesla',
-    logo: FontAwesomeIcons.wizardsOfTheCoast,
+    data: '+326%',
+    label: 'Yahoo',
+    logo: FontAwesomeIcons.yahoo,
     circleColor: Colors.white,
     boxColor: Colors.pink,
   ),
   Stock(
-    data: '+1726%',
-    label: 'Google',
-    logo: FontAwesomeIcons.google,
+    data: '+726%',
+    label: 'Xing',
+    logo: FontAwesomeIcons.xing,
     circleColor: Colors.purple,
     boxColor: Colors.lightGreenAccent,
   ),
   Stock(
-    data: '+540%',
-    label: 'Reliance',
-    logo: FontAwesomeIcons.mobile,
+    data: '+726%',
+    label: 'Yinyang',
+    logo: FontAwesomeIcons.yinYang,
     circleColor: Colors.teal,
     boxColor: Colors.amberAccent,
   ),
 
 ];
-
 
 
 

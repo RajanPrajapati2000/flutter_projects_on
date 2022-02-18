@@ -11,29 +11,17 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawerScrimColor: Colors.black,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-           DrawerHeader(
-               decoration: BoxDecoration(
-                 image: DecorationImage(
-                   image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn0EQn9cCXCHQQZefRsJnrzu5tpvDJFJ4GCg&usqp=CAU')
-                 )
-               ),
-               child: Container(
-
-           ))
-          ],
-        ),
-      ),
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 90),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             elevation: 0,
+            leading:  CircleAvatar(
+              backgroundColor: Colors.black,
+              child: Icon(Icons.menu),
+            ),
             actions: [
               CircleAvatar(
                 radius: 40,
@@ -92,13 +80,12 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
                   _buildPadding(label: 'Popular Stocks'),
-
-                  StockWidget(data: ref.read(dataProvider).stocks),
+                  StockWidget(isPopular: true),
 
                   SizedBox(height: 17,),
 
                   _buildPadding(label: 'Following Stocks'),
-                  StockWidget(data: ref.watch(dataProvider).following_stocks,),
+                  StockWidget(isPopular: false,),
 
                 ],
               );
@@ -108,10 +95,12 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Padding _buildPadding({required String label}) {
+  Padding _buildPadding({ required String label}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Text(label, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),),
     );
   }
+
+
 }
