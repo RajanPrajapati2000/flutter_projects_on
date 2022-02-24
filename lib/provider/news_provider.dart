@@ -7,7 +7,6 @@ final newsProvider = FutureProvider((ref) => NewsProvider().getData());
 
 class NewsProvider{
 
-
   Future<List<News>> getData() async{
    final dio = Dio();
    try{
