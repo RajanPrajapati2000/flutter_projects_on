@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/provider/news_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,15 +42,16 @@ class HomeScreen extends StatelessWidget {
                    child: Center(child: CircularProgressIndicator(
                      color: Colors.purple,
                    ),),
-                 ) :  news[0].title == 'no_data' ? Container(
-                   margin: EdgeInsets.only(top: 120),
-                   child: Text('No matches for your search.'),)  :  Container(
+                 ) : news[0].title == 'not found' ? Container(
+                   margin: EdgeInsets.only(top: 20),
+                   child: Text('No matches for your search.', style: TextStyle(fontSize: 16),),)  : Container(
                    height: MediaQuery.of(context).size.height - 100,
                    child: ListView.builder(
                      shrinkWrap: true,
                           itemCount: news.length,
                           itemBuilder: (context, index){
                             final dat = news[index];
+                            print(news[0].media);
                             return Card(
                               child: Container(
                                 padding: EdgeInsets.all(7),
@@ -83,14 +83,14 @@ class HomeScreen extends StatelessWidget {
                                       height: 195,
                                       child: ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset('assets/media.png', fit: BoxFit.fill,)),)  :   Container(
+                                          child: Image.asset('assets/images/no-image.jpg', fit: BoxFit.fill,)),)  :   Container(
                                       width: 170,
                                       height: 195,
                                       child: ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
                                           child: CachedNetworkImage(
                                             imageUrl: dat.media,
-                                            errorWidget: (context, err, child) => Image.asset('assets/media.png'),
+                                            errorWidget: (context, err, child) => Image.asset('assets/images/no-image.jpg'),
                                             fit: BoxFit.fill,
                                           ))
                                       ,),

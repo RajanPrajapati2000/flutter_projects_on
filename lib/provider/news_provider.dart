@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project/models/news.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,15 +23,18 @@ class NewsProvider extends StateNotifier<List<News>>{
       }, options: Options(
           headers: {
             'x-rapidapi-host': 'free-news.p.rapidapi.com',
-            'x-rapidapi-key': '9cac60b351msh530cc0e2b8d88d2p1f9661jsn2c0049707e46'
+            'x-rapidapi-key': dotenv.env['API_KEY']
           }
       ));
-     if(response.data['status'] == 'No matches for your search.'){
-        state = [News(summary: '', published_date: '', link: '', author: '', title: 'no_data', media: '')];
-     }else{
-       final data = (response.data['articles'] as List).map((e) => News.fromJson(e)).toList();
-       state = data;
-     }
+
+   if(response.data['status'] == 'No matches for your search.'){
+           state = [News(summary: '', published_date: '', link: '', author: '', title: 'not found', media: '')];
+      }else{
+   final data = (response.data['articles'] as List).map((e) => News.fromJson(e)).toList();
+   state = data;
+
+}
+
 
     }on DioError catch (err){
       print(err.response);
@@ -53,10 +57,12 @@ class NewsProvider extends StateNotifier<List<News>>{
             'x-rapidapi-key': '9cac60b351msh530cc0e2b8d88d2p1f9661jsn2c0049707e46'
           }
       ));
+
       if(response.data['status'] == 'No matches for your search.'){
-        state = [News(summary: '', published_date: '', link: '', author: '', title: 'no_data', media: '')];
-      }else{
-        final data = (response.data['articles'] as List).map((e) => News.fromJson(e)).toList();
+        state = [News(summary: '', published_date: '', link: '', author: '', title: 'not found', media: '')];
+      }else {
+        final data = (response.data['articles'] as List).map((e) =>
+            News.fromJson(e)).toList();
         state = data;
       }
     }on DioError catch (err){
