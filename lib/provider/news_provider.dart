@@ -23,7 +23,7 @@ class NewsProvider extends StateNotifier<List<News>>{
       }, options: Options(
           headers: {
             'x-rapidapi-host': 'free-news.p.rapidapi.com',
-            'x-rapidapi-key': dotenv.env['API_KEY']
+            'x-rapidapi-key': '9cac60b351msh530cc0e2b8d88d2p1f9661jsn2c0049707e46'
           }
       ));
 
@@ -70,12 +70,6 @@ class NewsProvider extends StateNotifier<List<News>>{
 
     }
   }
-
-
-
-
-
-
-
-
 }
+
+

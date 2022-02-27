@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/provider/news_provider.dart';
+import 'package:flutter_project/widgets/web_view_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
 
 
@@ -30,7 +32,16 @@ class HomeScreen extends StatelessWidget {
                               ref.read(newsProvider.notifier).searchNews(val);
                               searchController.clear();
                             },
+                            onChanged: (val){
+
+                            },
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: (){
+                                    FocusScope.of(context).unfocus();
+                                   ref.read(newsProvider.notifier).searchNews(searchController.text.trim());
+                                   searchController.clear();
+                                  }, icon: Icon(Icons.search)),
                               contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                               hintText: 'Search for news',
                               border: OutlineInputBorder()
@@ -52,49 +63,54 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context, index){
                             final dat = news[index];
                             print(news[0].media);
-                            return Card(
-                              child: Container(
-                                padding: EdgeInsets.all(7),
-                                height: 195,
-                                width: double.infinity,
-                                child: Row(
-                                  children: [
+                            return InkWell(
+                              onTap: (){
+                                Get.to(() => WebViewWidget(dat.link), transition: Transition.leftToRight);
+                              },
+                              child: Card(
+                                child: Container(
+                                  padding: EdgeInsets.all(7),
+                                  height: 195,
+                                  width: double.infinity,
+                                  child: Row(
+                                    children: [
 
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(dat.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w500),),
-                                          SizedBox(height: 7,),
-                                          Text(dat.summary, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.blueGrey),),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 5),
-                                            child: Text(dat.author,  overflow: TextOverflow.ellipsis,),
-                                          ),
-                                          Text(dat.published_date,  overflow: TextOverflow.ellipsis,),
-                                        ],
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(dat.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontWeight: FontWeight.w500),),
+                                            SizedBox(height: 7,),
+                                            Text(dat.summary, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.blueGrey),),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 5),
+                                              child: Text(dat.author,  overflow: TextOverflow.ellipsis,),
+                                            ),
+                                            Text(dat.published_date,  overflow: TextOverflow.ellipsis,),
+                                          ],
+                                        ),
                                       ),
-                                    ),
 
 
-                                    SizedBox(width: 10,),
-                                    dat.media == '' ? Container(
-                                      width: 170,
-                                      height: 195,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset('assets/images/no-image.jpg', fit: BoxFit.fill,)),)  :   Container(
-                                      width: 170,
-                                      height: 195,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: CachedNetworkImage(
-                                            imageUrl: dat.media,
-                                            errorWidget: (context, err, child) => Image.asset('assets/images/no-image.jpg'),
-                                            fit: BoxFit.fill,
-                                          ))
-                                      ,),
-                                  ],
+                                      SizedBox(width: 10,),
+                                      dat.media == '' ? Container(
+                                        width: 170,
+                                        height: 195,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.asset('assets/images/no-image.jpg', fit: BoxFit.fill,)),)  :   Container(
+                                        width: 170,
+                                        height: 195,
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: CachedNetworkImage(
+                                              imageUrl: dat.media,
+                                              errorWidget: (context, err, child) => Image.asset('assets/images/no-image.jpg'),
+                                              fit: BoxFit.fill,
+                                            ))
+                                        ,),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
