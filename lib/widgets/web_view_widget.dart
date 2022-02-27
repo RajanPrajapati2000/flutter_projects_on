@@ -3,9 +3,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 
 
+
 class WebViewWidget extends StatefulWidget {
   final String link;
-
   WebViewWidget(this.link);
 
   @override
@@ -20,26 +20,27 @@ class _WebViewWidgetState extends State<WebViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: Column(
-            children: [
-              LinearProgressIndicator(
-                color: Colors.red,
-                value: progress,
-              ),
-              Expanded(
-                child: WebView(
-                  initialUrl: widget.link,
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onProgress: (val){
-                     setState(() {
-                       print(val);
-                        progress = val / 100;
-                     });
-                  },
+            child: Column(
+              children: [
+                LinearProgressIndicator(
+                  color: Colors.red,
+                  value: progress,
                 ),
-              ),
-            ],
-          ),
+                Expanded(
+                  child: WebView(
+                    initialUrl: widget.link,
+                    javascriptMode: JavascriptMode.unrestricted,
+                    onProgress: (val){
+                      setState(() {
+                         progress = val / 100 ;
+                         print(progress);
+                      });
+
+                    }
+                  ),
+                ),
+              ],
+            )
         )
     );
   }
