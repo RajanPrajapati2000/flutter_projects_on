@@ -36,11 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
   get: ^4.6.1
-  font_awesome_flutter: ^9.2.0
   flutter_riverpod: ^1.0.3
   cached_network_image: ^3.2.0
   flutter_dotenv: ^5.0.2
-  webview_flutter: ^3.0.1
 
 dev_dependencies:
   flutter_test:
