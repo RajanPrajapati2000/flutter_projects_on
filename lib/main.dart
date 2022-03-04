@@ -22,6 +22,7 @@ runApp(ProviderScope(child: Home()));
 
 class Home extends StatelessWidget {
 
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
