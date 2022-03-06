@@ -1,58 +1,95 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_project/api.dart';
 import 'package:flutter_project/models/movie.dart';
+import 'package:flutter_project/models/movie_state.dart';
+import 'package:flutter_project/service/movie_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
+final stateMovieProvider = StateNotifierProvider<MoviesProvider, MovieState>((ref) => MoviesProvider());
 
-final movieProvider = StateNotifierProvider.family<MovieProvider, List<Movie>, String>((ref, path) => MovieProvider(apiPath: path));
-
-
-class MovieProvider extends StateNotifier<List<Movie>>{
-  MovieProvider({required this.apiPath}) : super([]){
+class MoviesProvider extends StateNotifier<MovieState> {
+  MoviesProvider() : super(MovieState.initState()){
     getMovies();
   }
 
-  final String apiPath;
 
-  Future<void> getMovies() async{
-  final dio = Dio();
-    try{
+  List<Movie> _movies = [];
 
-    final response = await dio.get(apiPath, queryParameters: {
-      'api_key': '2a0f926961d00c667e191a21c14461f8',
-      'language': 'en-Us'
-    });
+  Future<void> getMovies() async {
+   if(state.searchText == ''){
+      if(state.apiPath == Api.getPopularMovie){
+           _movies = await MovieService.getMovies(state.apiPath, state.page);
+      }else if(state.apiPath == Api.getTopRatedMovie){
+        _movies = await MovieService.getMovies(state.apiPath, state.page);
+      }else{
+        _movies = await MovieService.getMovies(state.apiPath, state.page);
+      }
 
-    state = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
 
-    }on DioError catch (e){
+   }else{
 
-      print(e);
 
+  _movies = await  MovieService.searchMovies(state.apiPath, state.page, state.searchText);
+   }
+
+     state = state.copyWith(
+       movies:  [...state.movies, ..._movies]
+     );
+
+
+    }
+
+
+
+//update_category
+
+  void updateCategory(int index){
+
+    switch(index){
+      case 0:
+        state = state.copyWith(
+          movies: [],
+          apiPath: Api.getPopularMovie,
+          searchText: ''
+        );
+        getMovies();
+        break;
+      case 1:
+        state = state.copyWith(
+          movies: [],
+          apiPath: Api.getTopRatedMovie,
+          searchText: ''
+        );
+           getMovies();
+        break;
+      default:
+        state = state.copyWith(
+          movies: [],
+          apiPath: Api.getUpcomingMovie,
+          searchText: ''
+        );
+        getMovies();
     }
 
   }
 
-  Future<void> searchMovies(String query) async{
-    final dio = Dio();
-    try{
 
-      final response = await dio.get('https://api.themoviedb.org/3/search/movie', queryParameters: {
-        'api_key': '2a0f926961d00c667e191a21c14461f8',
-        'language': 'en-Us',
-        'query': query
-      });
+//search_movies
 
-     // state = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
-      print(response.data);
-    }on DioError catch (e){
 
-      print(e);
+  void searchMovies(String searchText){
+  state  = state.copyWith(
+    searchText: searchText,
+    apiPath: Api.getSearchMovie,
+    movies: []
+  );
 
-    }
+  getMovies();
 
   }
+
+
+//load_more
 
 
 

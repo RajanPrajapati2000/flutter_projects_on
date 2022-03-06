@@ -11,6 +11,7 @@ class Movie{
   late String release_date;
   late String vote_average;
 
+    
 
   Movie({
    required this.id,
@@ -23,12 +24,12 @@ class Movie{
 
  factory Movie.fromJson(Map<String, dynamic> json){
    return Movie(
-       id: json['id'],
-       release_date: json['release_date'],
-       poster_path: json['poster_path'],
-       vote_average: json['vote_average'].toString(),
-       overview: json['overview'],
-       title: json['title'],
+       id: json['id'] ?? '',
+       release_date: json['release_date'] ?? '',
+       poster_path: json['poster_path'] ?? '',
+       vote_average: '${json['vote_average']}' ,
+       overview: json['overview'] ?? '',
+       title: json['title'] ?? '',
    );
  }
 

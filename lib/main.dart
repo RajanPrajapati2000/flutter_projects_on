@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_project/models/movie_state.dart';
 import 'package:flutter_project/screens/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,6 @@ runApp(ProviderScope(child: Home()));
 
 
 class Home extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
