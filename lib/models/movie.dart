@@ -22,6 +22,8 @@ class Movie{
     required this.title,
   });
 
+  Movie.initState() : id=0, overview='', poster_path='', release_date='', title='not available', vote_average='';
+
  factory Movie.fromJson(Map<String, dynamic> json){
    return Movie(
        id: json['id'] ?? '',

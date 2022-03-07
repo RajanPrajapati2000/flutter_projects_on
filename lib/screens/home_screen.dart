@@ -23,9 +23,9 @@ final searchController = TextEditingController();
             child: Consumer(
               builder: (context, ref, child) {
                 return TabBar(
-                   onTap: (index){
+                  onTap: (index){
                    ref.read(stateMovieProvider.notifier).updateCategory(index);
-                   },
+                  },
                     indicatorColor: Colors.purpleAccent,
                     tabs: [
                       Tab(
@@ -56,7 +56,7 @@ final searchController = TextEditingController();
                       controller: searchController,
                       onFieldSubmitted: (val) {
                         searchController.clear();
-                   ref.read(stateMovieProvider.notifier).searchMovies(val);
+                        ref.read(stateMovieProvider.notifier).searchMovie(val);
                       },
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
