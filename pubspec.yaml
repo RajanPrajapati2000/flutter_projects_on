@@ -39,7 +39,8 @@ dependencies:
   flutter_riverpod: ^1.0.3
   cached_network_image: ^3.2.0
   flutter_dotenv: ^5.0.2
-
+  shared_preferences: ^2.0.13
+  flutter_offline: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

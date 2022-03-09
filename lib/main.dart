@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: HomeScreen(),
     );
   }
 }
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
       ),
         body: Consumer(
           builder: (context, ref, child) {
-            final data = ref.watch(moviesProvider);
+          //  final data = ref.watch(moviesProvider);
             final counts = ref.watch(counterProvider);
             return Container(
               child: Column(
@@ -53,24 +53,20 @@ class HomePage extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: data.movies.map((e) {
-                      return Container(
+                    children:[
+                       Container(
                           height: 300,
                           width: 300,
                           child: Column(
                             children: [
-                              Image.network(e.imageUrl, fit: BoxFit.cover, height: 200, width: 200,),
-                              Row(
-                                children: e.genre.map((e){
-                                  return Text(e);
-                                }).toList(),
-                              )
+                              Image.network(counts.imageUrl, fit: BoxFit.cover, height: 200, width: 200,),
+                          Text('${counts.releaseDate}', style: TextStyle(fontSize: 50),),
                             ],
-                          ));
-                    }).toList()
+                          ))
+                    ]
                   ),
                   TextButton(onPressed: (){
-                    ref.read(counterProvider.notifier).increment();
+                    ref.read(counterProvider.notifier).update();
                     // ref.read(moviesProvider).addMovie(
                     //     Movie(
                     //     title: 'God',
@@ -78,7 +74,7 @@ class HomePage extends StatelessWidget {
                     //     releaseDate: 2021,
                     //     imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/21/Web_of_Spider-Man_Vol_1_129-1.png'
                     // ));
-                  }, child: Text('add movie $counts', style: TextStyle(fontSize: 25),))
+                  }, child: Text('update movie', style: TextStyle(fontSize: 25),))
                 ],
               ),
             );

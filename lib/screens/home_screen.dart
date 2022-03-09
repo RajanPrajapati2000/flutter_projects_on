@@ -7,8 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
 final searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -23,6 +29,7 @@ final searchController = TextEditingController();
             child: Consumer(
               builder: (context, ref, child) {
                 return TabBar(
+
                   onTap: (index){
                    ref.read(stateMovieProvider.notifier).updateCategory(index);
                   },
@@ -73,6 +80,7 @@ final searchController = TextEditingController();
               ),
               Expanded(
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                     children: [
                    TabBarWidget(),
                    TabBarWidget(),
