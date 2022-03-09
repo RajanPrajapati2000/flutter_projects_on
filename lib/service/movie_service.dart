@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_project/api.dart';
 import 'package:flutter_project/models/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,20 +18,23 @@ class MovieService{
     try{
       final response = await dio.get(apiPath, queryParameters: {
         'api_key': '2a0f926961d00c667e191a21c14461f8',
-        'page':page
+        'page': page
       });
-          prefs.setString('movieData', jsonEncode(response.data['results']));
+      if(apiPath == Api.getPopularMovie){
+        prefs.setString('movie', jsonEncode(response.data['results']));
+      }
       final  data = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
       return data;
     }on DioError catch (err){
-      List<Movie> _movies = [];
       if(err.type == DioErrorType.other){
-         final data = jsonDecode(prefs.getString('movieData')!);
-         _movies = (data as List).map((e) => Movie.fromJson(e)).toList();
+        if(apiPath == Api.getPopularMovie){
+           final decodedData = jsonDecode(prefs.getString('movie')!);
+          final  data = (decodedData as List).map((e) => Movie.fromJson(e)).toList();
+          return data;
+        }
+        throw err;
       }
-      return _movies;
-
-
+      throw err;
     }
 
 
@@ -42,18 +46,17 @@ class MovieService{
 
   static Future<List<Movie>> searchMovies(String apiPath, int page, String query) async{
     final dio = Dio();
-
-
     try{
       final response = await dio.get(apiPath, queryParameters: {
         'api_key': '2a0f926961d00c667e191a21c14461f8',
-        'page':page,
+        'page': page,
         'query': query
       });
 
+
       final  data = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
       if(data.isEmpty){
-         return [Movie.initState()];
+        return [Movie.initState()];
       }else{
         return data;
       }

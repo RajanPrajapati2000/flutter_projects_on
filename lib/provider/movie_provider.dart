@@ -81,13 +81,12 @@ void updateCategory(int index){
 
 
 //load_more
-
 void loadMore(){
-  state = state.copyWith(
+    state = state.copyWith(
       searchText: '',
-    page: state.page + 1
-  );
-  getMovies();
+       page:  state.page + 1
+    );
+    getMovies();
 }
 
 

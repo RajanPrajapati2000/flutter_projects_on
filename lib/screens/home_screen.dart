@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/api.dart';
 import 'package:flutter_project/provider/movie_provider.dart';
+import 'package:flutter_project/widgets/popular_page.dart';
 import 'package:flutter_project/widgets/tab_bar_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -82,7 +83,7 @@ final searchController = TextEditingController();
                 child: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                     children: [
-                   TabBarWidget(),
+                   PopularPage(),
                    TabBarWidget(),
                    TabBarWidget(),
                     ]
