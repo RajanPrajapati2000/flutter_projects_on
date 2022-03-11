@@ -18,23 +18,24 @@ class MovieService{
     try{
       final response = await dio.get(apiPath, queryParameters: {
         'api_key': '2a0f926961d00c667e191a21c14461f8',
-        'page': page
+        'page':page
       });
       if(apiPath == Api.getPopularMovie){
-        prefs.setString('movie', jsonEncode(response.data['results']));
+        final response1 = await dio.get(apiPath, queryParameters: {
+          'api_key': '2a0f926961d00c667e191a21c14461f8',
+          'page':1
+        });
+        prefs.setString('movieData', jsonEncode(response1.data['results']));
       }
       final  data = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
       return data;
     }on DioError catch (err){
-      if(err.type == DioErrorType.other){
-        if(apiPath == Api.getPopularMovie){
-           final decodedData = jsonDecode(prefs.getString('movie')!);
-          final  data = (decodedData as List).map((e) => Movie.fromJson(e)).toList();
-          return data;
-        }
-        throw err;
+      if(apiPath == Api.getPopularMovie){
+        final data = jsonDecode(prefs.getString('movieData')!);
+        final  decode = (data as List).map((e) => Movie.fromJson(e)).toList();
+        return decode;
       }
-      throw err;
+     throw err;
     }
 
 
@@ -46,13 +47,14 @@ class MovieService{
 
   static Future<List<Movie>> searchMovies(String apiPath, int page, String query) async{
     final dio = Dio();
+
+
     try{
       final response = await dio.get(apiPath, queryParameters: {
         'api_key': '2a0f926961d00c667e191a21c14461f8',
-        'page': page,
+        'page':page,
         'query': query
       });
-
 
       final  data = (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
       if(data.isEmpty){

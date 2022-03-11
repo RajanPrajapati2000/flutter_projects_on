@@ -5,27 +5,26 @@ import 'package:flutter_project/service/movie_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-final stateMovieProvider = StateNotifierProvider<MoviesProvider, MovieState>((ref) => MoviesProvider());
+final stateMovieProvider = StateNotifierProvider.family<MoviesProvider, MovieState, String>((ref, api) => MoviesProvider(apiPath: api));
 
 class MoviesProvider extends StateNotifier<MovieState> {
-  MoviesProvider() : super(MovieState.initState()){
+  MoviesProvider({required this.apiPath}) : super(MovieState.initState()){
      getMovies();
   }
 
+ final String apiPath;
+
   Future<void> getMovies() async{
-
     List<Movie> _movies = [];
-
     if(state.searchText == ''){
-      if(state.apiPath == Api.getPopularMovie){
-        _movies = await MovieService.getMovies(state.apiPath, state.page);
-      }else if( state.apiPath == Api.getTopRatedMovie){
-        _movies = await MovieService.getMovies(state.apiPath, state.page);
+      if(apiPath == Api.getPopularMovie){
+        _movies = await MovieService.getMovies(apiPath, state.page);
+      }else if(apiPath == Api.getTopRatedMovie){
+        _movies = await MovieService.getMovies(apiPath, state.page);
       }else{
-        _movies = await MovieService.getMovies(state.apiPath, state.page);
+        _movies = await MovieService.getMovies(apiPath, state.page);
       }
      }else{
-
       _movies = await MovieService.searchMovies(state.apiPath, state.page, state.searchText);
     }
 
@@ -34,34 +33,6 @@ class MoviesProvider extends StateNotifier<MovieState> {
   );
 
   }
-
-
-//update_category
-
-void updateCategory(int index){
-   if(index == 0){
-     state  = state.copyWith(
-       movies: [],
-       searchText: '',
-       apiPath: Api.getPopularMovie
-     );
-     getMovies();
-   }else if( index == 1){
-     state  = state.copyWith(
-         movies: [],
-         searchText: '',
-         apiPath: Api.getTopRatedMovie
-     );
-     getMovies();
-   }else{
-     state  = state.copyWith(
-         movies: [],
-         searchText: '',
-         apiPath: Api.getUpcomingMovie
-     );
-     getMovies();
-   }
-}
 
 
 

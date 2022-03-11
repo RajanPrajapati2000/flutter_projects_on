@@ -8,12 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+class HomeScreen extends StatelessWidget {
 
-class _HomeScreenState extends State<HomeScreen> {
 final searchController = TextEditingController();
 
   @override
@@ -27,13 +23,7 @@ final searchController = TextEditingController();
           flexibleSpace: Image.asset('assets/images/movie.png', fit: BoxFit.cover,),
           bottom: PreferredSize(
             preferredSize: Size(double.infinity, 50),
-            child: Consumer(
-              builder: (context, ref, child) {
-                return TabBar(
-
-                  onTap: (index){
-                   ref.read(stateMovieProvider.notifier).updateCategory(index);
-                  },
+            child: TabBar(
                     indicatorColor: Colors.purpleAccent,
                     tabs: [
                       Tab(
@@ -49,8 +39,7 @@ final searchController = TextEditingController();
                         text: 'UpComing Movies',
                       ),
                     ]
-                );
-              }
+
             ),
           ),
         ),
@@ -64,7 +53,7 @@ final searchController = TextEditingController();
                       controller: searchController,
                       onFieldSubmitted: (val) {
                         searchController.clear();
-                        ref.read(stateMovieProvider.notifier).searchMovie(val);
+                        ref.read(stateMovieProvider(Api.getSearchMovie).notifier).searchMovie(val);
                       },
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -83,9 +72,9 @@ final searchController = TextEditingController();
                 child: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                     children: [
-                   PopularPage(),
-                   TabBarWidget(),
-                   TabBarWidget(),
+                  PopularPage('page 1'),
+                   TabBarWidget(Api.getTopRatedMovie, 'page 2'),
+                   TabBarWidget(Api.getUpcomingMovie, 'page 3'),
                     ]
                 ),
               ),
