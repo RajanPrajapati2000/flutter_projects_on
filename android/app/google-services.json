@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822347461793",
+    "project_id": "fir-newsocial",
+    "storage_bucket": "fir-newsocial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822347461793:android:22c1ae460f250f06beace0",
+        "android_client_info": {
+          "package_name": "com.example.flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822347461793-ukpqmcoetpfvmu42kr69u1acg4kfedbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvvb1il8Z6NM0o29J3udZcSdnb6UcPeeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822347461793-ukpqmcoetpfvmu42kr69u1acg4kfedbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
